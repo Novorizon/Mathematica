@@ -1,14 +1,9 @@
 {
   "name": "com.novorizon.mathematica",
   "displayName": "Mathematica",
-  "description": "Fixed point and Geometry,Physics base on fixed point",
-  "version": "1.0.1",
+  "description": "Fixed point and Geometry, Physics base on fixed point.",
+  "version": "1.0.4",
   "unity": "2020.3",
   "license": "MIT",
-  "author": "Guan JInbiao",
-  "repository": {
-    "url": "https://github.com/Novorizon/Mathematica.git",
-    "type": "git",
-    "revision": "1.0.2r"
-  }
+  "author": "Guan JInbiao"
 }
