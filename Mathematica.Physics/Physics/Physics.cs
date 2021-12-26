@@ -2,7 +2,6 @@
 {
     public static partial class Physics
     {
-        public static Node node;
 
         // 1000次装拆箱造成的额外耗时10ms,只在测试时使用
         public static bool IsOverlap(Bounds a, Bounds b)
@@ -85,17 +84,17 @@
                 }
                 else if (b is OBB obb)
                 {
-                    return IsOverlap(a3, obb);
+                    return Geometry.IsOverlap(a3, obb);
 
                 }
                 else if (b is Sphere sphere)
                 {
-                    return IsOverlap(a3, sphere);
+                    return Geometry.IsOverlap(a3, sphere);
 
                 }
                 else if (b is Capsule capsule)
                 {
-                    return IsOverlap(a3, capsule);
+                    return Geometry.IsOverlap(a3, capsule);
 
                 }
             }
@@ -140,14 +139,5 @@
             }
             return false;
         }
-        //bounds碰撞的物体
-        //public static bool Collide(Bounds bounds, out RaycastHit hitInfo)
-        //{
-        //    node.Hit(bounds.Bounds, out hitInfo);
-
-        //    return IsOverlap(bounds, hitInfo.bounds);
-
-        //    return false;
-        //}
     }
 }
