@@ -5,5 +5,10 @@
   "version": "1.0.1",
   "unity": "2020.3",
   "license": "MIT",
-  "author": "Guan JInbiao"
+  "author": "Guan JInbiao",
+  "repository": {
+    "url": "https://github.com/Novorizon/Mathematica.git",
+    "type": "git",
+    "revision": "1.0.2r"
+  }
 }
