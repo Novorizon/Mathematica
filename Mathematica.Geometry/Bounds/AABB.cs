@@ -11,7 +11,7 @@ namespace Mathematica
         public static readonly int NORMAL = 3;
 
         public static readonly fix[] triangles = new fix[36] { 0, 1, 5, 0, 4, 5, 2, 3, 7, 2, 6, 7, 0, 3, 7, 0, 4, 7, 1, 2, 6, 1, 5, 6, 0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7 }; //暂时用于与AABB的相交检测
-        public static readonly fix3[] Normals = new fix3[3] { fix3.right, fix3.forward, fix3.up };//x轴 左右法线，y轴上下法线，z轴前后法线
+        public static readonly fix3[] Normals = new fix3[3] { fix3.right, fix3.up, fix3.forward };//x轴 左右法线，y轴上下法线，z轴前后法线
 
         public fix3 Center { get; private set; }
         public fix3 BevelRadius { get; private set; }
