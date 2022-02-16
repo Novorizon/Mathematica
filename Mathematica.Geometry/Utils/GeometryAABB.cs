@@ -26,15 +26,18 @@ namespace Mathematica
         }
 
 
-        /// SeparatingAxisTest  AABB AABB
-        public static bool IsOverlap(AABB a, AABB b) { return SeparatingAxisTest(a, b); }
-
-        [Obsolete("不完善 暂时不用")]
-        public static bool IsOverlap1(AABB a, AABB b)
+        public static bool IsOverlap(AABB a, AABB b)
         {
-            if (a.Min.x > b.Max.x || a.Min.y > b.Max.y || a.Min.z > b.Max.z || a.Max.x < b.Min.x || a.Max.y < b.Min.y || a.Max.z < b.Min.z)
-                return false;
-            return true;
+            return (a, b) switch
+            {
+                { a: _, b: _ } when (a.Center.x - a.BevelRadius.x >= b.Center.x + b.BevelRadius.x) => false,
+                { a: _, b: _ } when (a.Center.x + a.BevelRadius.x <= b.Center.x - b.BevelRadius.x) => false,
+                { a: _, b: _ } when (a.Center.y - a.BevelRadius.y >= b.Center.y + b.BevelRadius.y) => false,
+                { a: _, b: _ } when (a.Center.y + a.BevelRadius.y <= b.Center.y - b.BevelRadius.y) => false,
+                { a: _, b: _ } when (a.Center.z - a.BevelRadius.z >= b.Center.z + b.BevelRadius.z) => false,
+                { a: _, b: _ } when (a.Center.z + a.BevelRadius.z <= b.Center.z - b.BevelRadius.z) => false,
+                _ => true,
+            };
         }
 
         [Obsolete("重新Update造成多两倍的GC耗时")]
