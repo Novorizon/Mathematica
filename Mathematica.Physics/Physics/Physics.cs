@@ -91,7 +91,7 @@ namespace Mathematica
                 Axis.YAxis => SeparatingAxisTestY(b, a),
                 Axis.ZAxis => SeparatingAxisTest(b, a),
                 Axis.AnyAxis => SeparatingAxisTest(b, a),
-                _ => SeparatingAxisTest(b, b)
+                _ => SeparatingAxisTest(b, a)
             };
         }
 
@@ -140,7 +140,7 @@ namespace Mathematica
                 Axis.YAxis => SeparatingAxisTest(b, a),
                 Axis.ZAxis => SeparatingAxisTest(b, a),
                 Axis.AnyAxis => SeparatingAxisTest(b, a),
-                _ => SeparatingAxisTest(b, b)
+                _ => SeparatingAxisTest(b, a)
             };
         }
 
@@ -160,11 +160,11 @@ namespace Mathematica
         {
             return axis switch
             {
-                Axis.XAxis => IsOverlap(a, b),
-                Axis.YAxis => IsOverlap(a, b),
-                Axis.ZAxis => IsOverlap(a, b),
-                Axis.AnyAxis => IsOverlap(a, b),
-                _ => IsOverlap(a, b)
+                Axis.XAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTestY(b, a),
+                Axis.ZAxis => SeparatingAxisTest(b, a),
+                Axis.AnyAxis => SeparatingAxisTest(b, a),
+                _ => SeparatingAxisTest(b, a)
             };
         }
 
@@ -184,11 +184,11 @@ namespace Mathematica
         {
             return axis switch
             {
-                Axis.XAxis => IsOverlap(a, b),
-                Axis.YAxis => IsOverlap(a, b),
-                Axis.ZAxis => IsOverlap(a, b),
-                Axis.AnyAxis => IsOverlap(a, b),
-                _ => IsOverlap(a, b)
+                Axis.XAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTestY(b, a),
+                Axis.ZAxis => SeparatingAxisTest(b, a),
+                Axis.AnyAxis => SeparatingAxisTest(b, a),
+                _ => SeparatingAxisTest(b, a)
             };
         }
 
@@ -200,7 +200,7 @@ namespace Mathematica
                 Axis.YAxis => SeparatingAxisTest(b, a),
                 Axis.ZAxis => SeparatingAxisTest(b, a),
                 Axis.AnyAxis => SeparatingAxisTest(b, a),
-                _ => SeparatingAxisTest(b, b)
+                _ => SeparatingAxisTest(b, a)
             };
         }
 

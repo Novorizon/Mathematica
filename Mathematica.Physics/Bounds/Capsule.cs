@@ -12,19 +12,17 @@ namespace Mathematica
         public fix Radius2 { get; private set; }
         public fix3 Center1 { get; private set; }
         public fix3 Center2 { get; private set; }
-        public bool isFixedAxis { get; private set; }
 
         fix3 axisOrigin;
         public AABB Bounds { get; private set; }
 
-        public Capsule(fix3 center, fix radius, fix height, quaternion rotation, fix3 axisOrigin, bool isFixedAxis = false)
+        public Capsule(fix3 center, fix radius, fix height, quaternion rotation, fix3 axisOrigin)
         {
             Center = center;
             Radius = radius;
             Height = height;
             Orientation = rotation;
             Axis = rotation * axisOrigin;
-            this.isFixedAxis = isFixedAxis;
             this.axisOrigin = axisOrigin;
 
             Radius2 = radius * radius;
