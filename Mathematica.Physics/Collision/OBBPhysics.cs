@@ -4,7 +4,7 @@ namespace Mathematica
 {
     public static partial class Physics
     {
-        public static bool IsOverlap(OBB aabb, fix3 point)
+        internal static bool IsOverlap(OBB aabb, fix3 point)
         {
             fix3 test0 = point - aabb.PointNormals[0];
             for (int i = 0; i < 3; i++)

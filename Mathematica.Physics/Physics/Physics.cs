@@ -13,6 +13,15 @@ namespace Mathematica
             Default = YAxis
         };
 
+        public static bool IsOverlap(AABB a, fix3 point, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(fix3 point, AABB a, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(OBB a, fix3 point, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(fix3 point, OBB a, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(Sphere a, fix3 point, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(fix3 point, Sphere a, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(Capsule a, fix3 point, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(fix3 point, Capsule a, Axis axis = Axis.Default) => IsOverlap(a, point);
+
         public static bool IsOverlap(AABB a, AABB b, Axis axis = Axis.Default)
         {
             return axis switch

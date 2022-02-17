@@ -5,7 +5,7 @@ namespace Mathematica
     public static partial class Physics
     {
         //任意轴向
-        public static bool IsOverlap(Capsule capsule, fix3 point)
+        internal static bool IsOverlap(Capsule capsule, fix3 point)
         {
             //判断与中心点1的距离
             if (math.distancesq(point, capsule.Center1) <= capsule.Radius2)
@@ -25,7 +25,7 @@ namespace Mathematica
             return false;
         }
 
-        public static bool IsOverlap(Capsule a, Capsule b)
+        internal static bool IsOverlap(Capsule a, Capsule b)
         {
             //端点距离
             fix dis = (a.Radius + b.Radius) * (a.Radius + b.Radius);
@@ -62,7 +62,7 @@ namespace Mathematica
 
             return false;
         }
-        public static bool IsOverlapParallel(Capsule a, Capsule b)
+        internal static bool IsOverlapParallel(Capsule a, Capsule b)
         {
             //端点距离
             fix dis = (a.Radius + b.Radius) * (a.Radius + b.Radius);

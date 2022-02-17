@@ -5,7 +5,7 @@ namespace Mathematica
 {
     public static partial class Physics
     {
-        public static bool SeparatingAxisTestY(AABB a, OBB b)
+        internal static bool SeparatingAxisTestY(AABB a, OBB b)
         {
             if (a.Center.y - a.BevelRadius.y >= b.Center.y + b.BevelRadius.y)
                 return false;

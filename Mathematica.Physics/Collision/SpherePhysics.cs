@@ -4,9 +4,9 @@ namespace Mathematica
 {
     public static partial class Physics
     {
-        public static bool IsOverlap(Sphere sphere, fix3 point) { return math.distancesq(point, sphere.Center) <= sphere.Radius2; }
+        internal static bool IsOverlap(Sphere sphere, fix3 point) { return math.distancesq(point, sphere.Center) <= sphere.Radius2; }
 
-        public static bool IsOverlap(Sphere a, Sphere b) { return math.distancesq(a.Center, b.Center) < (a.Radius + b.Radius) * (a.Radius + b.Radius); }
+        internal static bool IsOverlap(Sphere a, Sphere b) { return math.distancesq(a.Center, b.Center) < (a.Radius + b.Radius) * (a.Radius + b.Radius); }
 
 
         public static fix3 CollidePoint(Sphere sphere, AABB aabb)
