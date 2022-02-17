@@ -30,7 +30,7 @@ namespace Mathematica
             return axis switch
             {
                 Axis.XAxis => SeparatingAxisTest(a, b),
-                Axis.YAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTestY(a, b),
                 Axis.ZAxis => SeparatingAxisTest(a, b),
                 Axis.AnyAxis => SeparatingAxisTest(a, b),
                 _ => SeparatingAxisTest(a, b)
@@ -54,7 +54,7 @@ namespace Mathematica
             return axis switch
             {
                 Axis.XAxis => SeparatingAxisTest(a, b),
-                Axis.YAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTestY(a, b),
                 Axis.ZAxis => SeparatingAxisTest(a, b),
                 Axis.AnyAxis => SeparatingAxisTest(a, b),
                 _ => SeparatingAxisTest(a, b)
@@ -67,7 +67,7 @@ namespace Mathematica
             return axis switch
             {
                 Axis.XAxis => SeparatingAxisTest(a, b),
-                Axis.YAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTestY(a, b),
                 Axis.ZAxis => SeparatingAxisTest(a, b),
                 Axis.AnyAxis => SeparatingAxisTest(a, b),
                 _ => SeparatingAxisTest(a, b)
@@ -79,7 +79,7 @@ namespace Mathematica
             return axis switch
             {
                 Axis.XAxis => SeparatingAxisTest(b, a),
-                Axis.YAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTestY(b, a),
                 Axis.ZAxis => SeparatingAxisTest(b, a),
                 Axis.AnyAxis => SeparatingAxisTest(b, a),
                 _ => SeparatingAxisTest(b, b)
@@ -103,7 +103,7 @@ namespace Mathematica
             return axis switch
             {
                 Axis.XAxis => SeparatingAxisTest(a, b),
-                Axis.YAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTestY(a, b),
                 Axis.ZAxis => SeparatingAxisTest(a, b),
                 Axis.AnyAxis => SeparatingAxisTest(a, b),
                 _ => SeparatingAxisTest(a, b)
