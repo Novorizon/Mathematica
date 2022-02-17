@@ -1,4 +1,3 @@
-using Mathematica;
 using System;
 
 namespace Mathematica

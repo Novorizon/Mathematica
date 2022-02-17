@@ -1,7 +1,9 @@
 
+using System;
+
 namespace Mathematica
 {
-    public static partial class Geometry
+    public static partial class Physics
     {
         //每个点 在法线axis上的投影点
         internal static fix2 ExtremeProjectPoint(fix3 axis, fix3[] points)
@@ -37,7 +39,7 @@ namespace Mathematica
 
 
         /// SeparatingAxisTest  AABB AABB
-        public static bool SeparatingAxisTest(AABB a, AABB b)
+        internal static bool SeparatingAxisTest(AABB a, AABB b)
         {
             fix2 extremePoints0;
             fix2 extremePoints1;
@@ -64,7 +66,7 @@ namespace Mathematica
 
 
         /// SeparatingAxisTest  AABB OBB
-        public static bool SeparatingAxisTest(AABB aabb, OBB obb)
+        internal static bool SeparatingAxisTest(AABB aabb, OBB obb)
         {
             fix2 extremePoints0;
             fix2 extremePoints1;
@@ -101,7 +103,7 @@ namespace Mathematica
 
 
         /// SeparatingAxisTest  AABB Sphere
-        public static bool SeparatingAxisTest(AABB aabb, Sphere sphere)
+        internal static bool SeparatingAxisTest(AABB aabb, Sphere sphere)
         {
             fix3 p = sphere.Center - aabb.Center;
 
@@ -112,7 +114,7 @@ namespace Mathematica
 
 
         /// SeparatingAxisTest  OBB OBB
-        public static bool SeparatingAxisTest(OBB a, OBB b)
+        internal static bool SeparatingAxisTest(OBB a, OBB b)
         {
             for (int i = 0; i < OBB.NORMAL; i++)
             {
@@ -145,47 +147,8 @@ namespace Mathematica
             return true;
         }
 
-        public static bool SeparatingAxisTest1(OBB a, OBB b)
-        {
-            unsafe
-            {
-                fixed (fix3* normala = &a.Normals[0])
-                fixed (fix3* normalb = &b.Normals[0])
-                {
-                    for (int i = 0; i < OBB.NORMAL; i++)
-                    {
-                        fix2 extremePoints0 = ExtremeProjectPoint(*(normala + i), a.Points);
-                        fix2 extremePoints1 = ExtremeProjectPoint(*(normala + i), b.Points);
-                        if (!IsOverlap(extremePoints0, extremePoints1))
-                            return false;
-                    }
-                    for (int i = 0; i < OBB.NORMAL; i++)
-                    {
-                        fix2 extremePoints0 = ExtremeProjectPoint(*(normalb + i), a.Points);
-                        fix2 extremePoints1 = ExtremeProjectPoint(*(normalb + i), b.Points);
-                        if (!IsOverlap(extremePoints0, extremePoints1))
-                            return false;
-                    }
-                    for (int i = 0; i < OBB.NORMAL; i++)
-                    {
-                        for (int j = 0; j < OBB.NORMAL; j++)
-                        {
-                            fix3 n = math.cross(*(normala + i), *(normalb + j));
-                            fix2 extremePoints0 = ExtremeProjectPoint(n, a.Points);
-                            fix2 extremePoints1 = ExtremeProjectPoint(n, b.Points);
-                            if (!IsOverlap(extremePoints0, extremePoints1))
-                                return false;
-                        }
-                    }
-                }
-            }
-
-
-            return true;
-        }
-
         /// SeparatingAxisTest  OBB Sphere
-        public static bool SeparatingAxisTest(OBB obb, Sphere sphere)
+        internal static bool SeparatingAxisTest(OBB obb, Sphere sphere)
         {
             fix3 p = sphere.Center - obb.Center;
             p = math.inverse(obb.Orientation) * p;
@@ -195,46 +158,7 @@ namespace Mathematica
             return math.length(u) < sphere.Radius;
         }
 
-        /// SeparatingAxisTest  Capsule Capsule
-        public static bool SeparatingAxisTest(Capsule a, Capsule b)
-        {
-            //端点距离
-            fix dis = (a.Radius + b.Radius) * (a.Radius + b.Radius);
-            if (math.distancesq(a.Center1, b.Center1) <= dis)
-                return true;
-            if (math.distancesq(a.Center1, b.Center2) <= dis)
-                return true;
-            if (math.distancesq(a.Center2, b.Center1) <= dis)
-                return true;
-            if (math.distancesq(a.Center2, b.Center2) <= dis)
-                return true;
-
-            dis = a.Radius + b.Radius;
-            if (math.dot(a.Center1 - b.Center2, b.Center1 - b.Center2) > 0 && math.dot(a.Center1 - b.Center1, b.Center1 - b.Center2) < 0)
-            {
-                if (PointToLineDistance(a.Center1, b.Center1, b.Center2) <= dis)
-                    return true;
-            }
-            if (math.dot(a.Center2 - b.Center2, b.Center1 - b.Center2) > 0 && math.dot(a.Center2 - b.Center1, b.Center1 - b.Center2) < 0)
-            {
-                if (PointToLineDistance(a.Center2, b.Center1, b.Center2) <= dis)
-                    return true;
-            }
-            if (math.dot(b.Center1 - a.Center2, a.Center1 - a.Center2) > 0 && math.dot(b.Center1 - a.Center1, a.Center1 - a.Center2) < 0)
-            {
-                if (PointToLineDistance(b.Center1, a.Center1, a.Center2) <= dis)
-                    return true;
-            }
-            if (math.dot(b.Center2 - a.Center2, a.Center1 - a.Center2) > 0 && math.dot(b.Center2 - a.Center1, a.Center1 - a.Center2) < 0)
-            {
-                if (PointToLineDistance(b.Center2, a.Center1, a.Center2) <= dis)
-                    return true;
-            }
-
-            return false;
-        }
-
-        public static bool SeparatingAxisTest(AABB aabb, Capsule capsule)
+        internal static bool SeparatingAxisTest(AABB aabb, Capsule capsule)
         {
             fix3 p = capsule.Center1 - aabb.Center;
             fix3 v = math.max(p, -p);
@@ -253,7 +177,7 @@ namespace Mathematica
             {
                 if (math.dot(aabb.Points[i] - capsule.Center1, capsule.Center2 - capsule.Center1) >= 0 && math.dot(aabb.Points[i] - capsule.Center2, capsule.Center1 - capsule.Center2) >= 0)
                 {
-                    fix dis = PointToLineDistance(aabb.Points[i], capsule.Center1, capsule.Center2);
+                    fix dis = Geometry.PointToLineDistance(aabb.Points[i], capsule.Center1, capsule.Center2);
                     if (dis < capsule.Radius)
                         return true;
                 }
@@ -268,7 +192,7 @@ namespace Mathematica
                 {
                     fix3[] tri = new fix3[3] { aabb.Points[AABB.triangles[j]], aabb.Points[AABB.triangles[j + 1]], aabb.Points[AABB.triangles[j + 2]] };
                     fix3 hit = fix3.MinValue;
-                    SpatialRelationship sr = SegmentHitTriangle(tri, seg, hit);
+                    SpatialRelationship sr = Geometry.SegmentHitTriangle(tri, seg, hit);
                     if (sr == SpatialRelationship.INTERSECTING)
                         return true;
                 }
@@ -278,7 +202,7 @@ namespace Mathematica
             return false;
         }
 
-        public static bool SeparatingAxisTest(OBB obb, Capsule capsule)
+        internal static bool SeparatingAxisTest(OBB obb, Capsule capsule)
         {
             fix3 p = capsule.Center1 - obb.Center;
             p = math.inverse(obb.Orientation) * p;
@@ -299,7 +223,7 @@ namespace Mathematica
             {
                 if (math.dot(obb.Points[i] - capsule.Center1, capsule.Center2 - capsule.Center1) >= 0 && math.dot(obb.Points[i] - capsule.Center2, capsule.Center1 - capsule.Center2) >= 0)
                 {
-                    fix dis = PointToLineDistance(obb.Points[i], capsule.Center1, capsule.Center2);
+                    fix dis = Geometry.PointToLineDistance(obb.Points[i], capsule.Center1, capsule.Center2);
                     if (dis < capsule.Radius)
                         return true;
                 }
@@ -314,7 +238,7 @@ namespace Mathematica
                 {
                     fix3[] tri = new fix3[3] { obb.Points[OBB.Triangles[j]], obb.Points[OBB.Triangles[j + 1]], obb.Points[OBB.Triangles[j + 2]] };
                     fix3 hit = fix3.MinValue;
-                    SpatialRelationship sr = SegmentHitTriangle(tri, seg, hit);
+                    SpatialRelationship sr = Geometry.SegmentHitTriangle(tri, seg, hit);
                     if (sr == SpatialRelationship.INTERSECTING)
                         return true;
                 }
@@ -323,7 +247,7 @@ namespace Mathematica
             return false;
         }
 
-        public static bool SeparatingAxisTest(Capsule capsule, Sphere sphere)
+        internal static bool SeparatingAxisTest(Capsule capsule, Sphere sphere)
         {
             //判断Sphere与中心点1的距离
             if (math.distancesq(sphere.Center, capsule.Center1) <= capsule.Radius2)
@@ -361,7 +285,7 @@ namespace Mathematica
 
             return true;
         }
-        public static bool intersectSegmentSphere(fix3 p, fix3 d, fix3 s_c, fix r, fix t)
+        internal static bool intersectSegmentSphere(fix3 p, fix3 d, fix3 s_c, fix r, fix t)
         {
             fix tmax = math.length(d * d);
             fix3 m = p - s_c;
@@ -405,7 +329,7 @@ namespace Mathematica
         }
 
 
-        public static bool intersectSegmentCapsule(fix3 sa, fix3 sb, fix3 p, fix3 q, fix r, fix t)
+        internal static bool intersectSegmentCapsule(fix3 sa, fix3 sb, fix3 p, fix3 q, fix r, fix t)
         {
             fix3 d = q - p, m = sa - p, n = sb - sa;
             fix md = math.length(m * d);

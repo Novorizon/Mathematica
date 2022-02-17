@@ -1,6 +1,5 @@
-using Mathematica;
+
 using System;
-using UnityEngine;
 
 namespace Mathematica
 {

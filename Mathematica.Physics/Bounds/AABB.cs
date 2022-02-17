@@ -1,6 +1,4 @@
 ﻿
-using Mathematica;
-
 namespace Mathematica
 {
     public struct AABB : Bounds

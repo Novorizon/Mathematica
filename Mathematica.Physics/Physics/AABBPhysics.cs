@@ -3,9 +3,9 @@ using System;
 
 namespace Mathematica
 {
-    public static partial class Geometry
+    public static partial class Physics
     {
-        public static bool IsOverlap1(AABB aabb, fix3 point)
+        internal static bool IsOverlap1(AABB aabb, fix3 point)
         {
             fix3 test0 = aabb.Points[0];
             for (int i = 0; i < 4; i++)
@@ -18,7 +18,7 @@ namespace Mathematica
             }
             return true;
         }
-        public static bool IsOverlap(AABB aabb, fix3 point)
+        internal static bool IsOverlap(AABB aabb, fix3 point)
         {
             if (aabb.Min.x > point.x || aabb.Min.y > point.y || aabb.Min.z > point.z || aabb.Max.x < point.x || aabb.Max.y < point.y || aabb.Max.z < point.z)
                 return false;
@@ -26,7 +26,7 @@ namespace Mathematica
         }
 
 
-        public static bool IsOverlap(AABB a, AABB b)
+        internal static bool IsOverlap(AABB a, AABB b)
         {
             return (a, b) switch
             {
@@ -39,24 +39,6 @@ namespace Mathematica
                 _ => true,
             };
         }
-
-        [Obsolete("重新Update造成多两倍的GC耗时")]
-        public static bool IsOverlap1(AABB aabb, OBB obb)
-        {
-            fix3 p = obb.Center - aabb.Center;
-            obb.Update(p, quaternion.identity);
-
-            for (int i = 0; i < OBB.VERTEX; i++)
-            {
-                if (IsOverlap(aabb, obb.Points[i]))
-                    return true;
-            }
-            return false;
-        }
-
-        public static bool IsOverlap(AABB aabb, OBB obb) { return SeparatingAxisTest(aabb, obb); }
-        public static bool IsOverlap(AABB aabb, Sphere sphere) { return SeparatingAxisTest(aabb, sphere); }
-        public static bool IsOverlap(AABB aabb, Capsule capsule) { return SeparatingAxisTest(aabb, capsule); }
 
 
         public static fix3 CollidePoint(AABB aabb, Sphere sphere)

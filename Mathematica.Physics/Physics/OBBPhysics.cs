@@ -2,7 +2,7 @@ using Mathematica;
 
 namespace Mathematica
 {
-    public static partial class Geometry
+    public static partial class Physics
     {
         public static bool IsOverlap(OBB aabb, fix3 point)
         {
@@ -17,15 +17,6 @@ namespace Mathematica
             }
             return true;
         }
-
-
-        public static bool IsOverlap(OBB o, OBB bb) { return SeparatingAxisTest(o, bb); }
-        public static bool IsOverlap(OBB obb, AABB aabb) { return SeparatingAxisTest(aabb, obb); }
-        public static bool IsOverlap(OBB obb, Sphere sphere) { return SeparatingAxisTest(obb, sphere); }
-        public static bool IsOverlap(OBB obb, Capsule capsule) { return SeparatingAxisTest(obb, capsule); }
-
-
-
 
         public static fix3 CollidePoint(OBB obb, Sphere sphere)
         {
