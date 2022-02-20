@@ -7,26 +7,6 @@ namespace Mathematica
 {
     public static partial class Geometry
     {
-
-        /// Determine the signed angle between two vectors, with normal 'n' as the rotation axis.
-        /// 两个向量之间的夹角，有符号.
-        public static fix AngleSigned(fix3 v1, fix3 v2, fix3 n)
-        {
-            return math.atan2(math.dot(n, math.cross(v1, v2)), math.dot(v1, v2)) * math.Rad2Deg;
-        }
-
-        /// Determine the signed angle between two vectors
-        /// 两个向量之间的夹角，无符号
-        public static fix Angle(fix3 v1, fix3 v2)
-        {
-            fix dot = math.dot(v1, v2);
-            if (dot == 0)
-                return 0;
-
-            dot = math.clamp(math.dot(v1, v2) / dot, -fix._1, fix._1);
-            return math.acos(dot) * math.Rad2Deg;
-        }
-
         /// 三角形是否相邻
         public static Tuple<bool, fix3, fix3> CoincideTriangle(Triangle TriangleA, Triangle TriangleB)
         {
@@ -63,18 +43,6 @@ namespace Mathematica
                 }
             }
             return new Tuple<bool, fix3, fix3>(isCoincide, left, right);
-        }
-
-        /// 二次贝塞尔
-        public static fix3 Bezier2(fix3 p0, fix3 p1, fix3 p2, fix t)
-        {
-            return (1 - t) * ((1 - t) * p0 + t * p1) + t * ((1 - t) * p1 + t * p2);
-        }
-
-        /// 三次贝塞尔
-        public static fix3 Bezier3(fix3 p0, fix3 p1, fix3 p2, fix3 p3, fix t)
-        {
-            return (1 - t) * ((1 - t) * ((1 - t) * p0 + t * p1) + t * ((1 - t) * p1 + t * p2)) + t * ((1 - t) * ((1 - t) * p1 + t * p2) + t * ((1 - t) * p2 + t * p3));
         }
     }
 }

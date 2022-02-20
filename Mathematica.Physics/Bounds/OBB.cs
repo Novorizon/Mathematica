@@ -1,6 +1,5 @@
-using Mathematica;
+
 using System;
-using UnityEngine;
 
 namespace Mathematica
 {
@@ -53,8 +52,8 @@ namespace Mathematica
             Points[7] = points[7] = new fix3(Max.x, Min.y, Max.z);
 
             Normals[0] = rotation * fix3.right;
-            Normals[1] = rotation * fix3.forward;
-            Normals[2] = rotation * fix3.up;
+            Normals[1] = rotation * fix3.up;
+            Normals[2] = rotation * fix3.forward;
 
             PointNormals[0] = Points[0];
             PointNormals[1] = Points[3];
@@ -78,8 +77,8 @@ namespace Mathematica
             }
 
             Normals[0] = Orientation * fix3.right;
-            Normals[1] = Orientation * fix3.forward;
-            Normals[2] = Orientation * fix3.up;
+            Normals[1] = Orientation * fix3.up;
+            Normals[2] = Orientation * fix3.forward;
 
             PointNormals[0] = Points[0];
             PointNormals[1] = Points[3];
@@ -103,8 +102,8 @@ namespace Mathematica
             }
 
             Normals[0] = Orientation * fix3.right;
-            Normals[1] = Orientation * fix3.forward;
-            Normals[2] = Orientation * fix3.up;
+            Normals[1] = Orientation * fix3.up;
+            Normals[2] = Orientation * fix3.forward;
 
             PointNormals[0] = Points[0];
             PointNormals[1] = Points[3];

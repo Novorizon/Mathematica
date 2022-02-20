@@ -3,9 +3,9 @@ using System;
 
 namespace Mathematica
 {
-    public static partial class Geometry
+    public static partial class Physics
     {
-        public static bool IsOverlap1(AABB aabb, fix3 point)
+        internal static bool IsOverlap1(AABB aabb, fix3 point)
         {
             fix3 test0 = aabb.Points[0];
             for (int i = 0; i < 4; i++)
@@ -18,7 +18,7 @@ namespace Mathematica
             }
             return true;
         }
-        public static bool IsOverlap(AABB aabb, fix3 point)
+        internal static bool IsOverlap(AABB aabb, fix3 point)
         {
             if (aabb.Min.x > point.x || aabb.Min.y > point.y || aabb.Min.z > point.z || aabb.Max.x < point.x || aabb.Max.y < point.y || aabb.Max.z < point.z)
                 return false;
@@ -26,34 +26,19 @@ namespace Mathematica
         }
 
 
-        /// SeparatingAxisTest  AABB AABB
-        public static bool IsOverlap(AABB a, AABB b) { return SeparatingAxisTest(a, b); }
-
-        [Obsolete("不完善 暂时不用")]
-        public static bool IsOverlap1(AABB a, AABB b)
+        internal static bool IsOverlap(AABB a, AABB b)
         {
-            if (a.Min.x > b.Max.x || a.Min.y > b.Max.y || a.Min.z > b.Max.z || a.Max.x < b.Min.x || a.Max.y < b.Min.y || a.Max.z < b.Min.z)
-                return false;
-            return true;
-        }
-
-        [Obsolete("重新Update造成多两倍的GC耗时")]
-        public static bool IsOverlap1(AABB aabb, OBB obb)
-        {
-            fix3 p = obb.Center - aabb.Center;
-            obb.Update(p, quaternion.identity);
-
-            for (int i = 0; i < OBB.VERTEX; i++)
+            return (a, b) switch
             {
-                if (IsOverlap(aabb, obb.Points[i]))
-                    return true;
-            }
-            return false;
+                { a: _, b: _ } when (a.Center.x - a.BevelRadius.x >= b.Center.x + b.BevelRadius.x) => false,
+                { a: _, b: _ } when (a.Center.x + a.BevelRadius.x <= b.Center.x - b.BevelRadius.x) => false,
+                { a: _, b: _ } when (a.Center.y - a.BevelRadius.y >= b.Center.y + b.BevelRadius.y) => false,
+                { a: _, b: _ } when (a.Center.y + a.BevelRadius.y <= b.Center.y - b.BevelRadius.y) => false,
+                { a: _, b: _ } when (a.Center.z - a.BevelRadius.z >= b.Center.z + b.BevelRadius.z) => false,
+                { a: _, b: _ } when (a.Center.z + a.BevelRadius.z <= b.Center.z - b.BevelRadius.z) => false,
+                _ => true,
+            };
         }
-
-        public static bool IsOverlap(AABB aabb, OBB obb) { return SeparatingAxisTest(aabb, obb); }
-        public static bool IsOverlap(AABB aabb, Sphere sphere) { return SeparatingAxisTest(aabb, sphere); }
-        public static bool IsOverlap(AABB aabb, Capsule capsule) { return SeparatingAxisTest(aabb, capsule); }
 
 
         public static fix3 CollidePoint(AABB aabb, Sphere sphere)

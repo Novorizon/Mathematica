@@ -17,8 +17,6 @@ namespace Mathematica
             radius2 = radius * radius;
         }
 
-
-
         public override int GetHashCode()
         {
             unchecked
