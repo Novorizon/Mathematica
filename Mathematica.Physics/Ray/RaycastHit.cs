@@ -2,7 +2,7 @@
 using Mathematica;
 using System;
 
-namespace Mathematica.Physics
+namespace Mathematica
 {
     public struct RaycastHit
     {

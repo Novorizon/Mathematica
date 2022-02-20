@@ -7,6 +7,38 @@ namespace Mathematica
 {
     public static partial class Geometry
     {
+        //每个点 在法线axis上的投影点
+        internal static fix2 ExtremeProjectPoint(fix3 axis, fix3[] points)
+        {
+            fix min = fix.Max;
+            fix max = fix.Min;
+            for (int i = 0; i < points.Length; i++)
+            {
+                fix p = math.dot(axis, points[i]);
+                min = math.min(p, min);
+                max = math.max(p, max);
+            }
+            return new fix2(min, max);
+        }
+
+        //端点 在自己法线axis上的投影点
+        internal static fix2 ExtremeProjectPoint(fix3 axis, fix3 min, fix3 max)
+        {
+            fix a = math.dot(axis, min);
+            fix b = math.dot(axis, max);
+            fix MIN = math.min(a, b);
+            fix MAX = math.max(a, b);
+
+            return new fix2(MIN, MAX);
+        }
+
+        internal static bool IsOverlap(fix2 point0, fix2 point1)
+        {
+            if (point0.x > point1.y || point0.y < point1.x)
+                return false;
+            return true;
+        }
+
         /// SeparatingAxisTest
         public static bool SeparatingAxisTest(Polygon g0, Polygon g1)
         {

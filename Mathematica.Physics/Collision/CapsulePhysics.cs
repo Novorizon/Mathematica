@@ -2,10 +2,10 @@ using Mathematica;
 
 namespace Mathematica
 {
-    public static partial class Geometry
+    public static partial class Physics
     {
         //任意轴向
-        public static bool IsOverlap(Capsule capsule, fix3 point)
+        internal static bool IsOverlap(Capsule capsule, fix3 point)
         {
             //判断与中心点1的距离
             if (math.distancesq(point, capsule.Center1) <= capsule.Radius2)
@@ -19,13 +19,13 @@ namespace Mathematica
             fix2 extremePoints = ExtremeProjectPoint(capsule.Center1 - capsule.Center2, new fix3[] { capsule.Center1, capsule.Center2 });
             if (extremePoints.x <= p && extremePoints.y >= p)
             {
-                if (PointToLineDistance(point, capsule.Center1, capsule.Center2) <= capsule.Radius * capsule.Radius)
+                if (Geometry.PointToLineDistance(point, capsule.Center1, capsule.Center2) <= capsule.Radius * capsule.Radius)
                     return true;
             }
             return false;
         }
 
-        public static bool IsOverlap(Capsule a, Capsule b)
+        internal static bool IsOverlap(Capsule a, Capsule b)
         {
             //端点距离
             fix dis = (a.Radius + b.Radius) * (a.Radius + b.Radius);
@@ -41,29 +41,28 @@ namespace Mathematica
             dis = a.Radius + b.Radius;
             if (math.dot(a.Center1 - b.Center2, b.Center1 - b.Center2) > 0 && math.dot(a.Center1 - b.Center1, b.Center1 - b.Center2) < 0)
             {
-                if (PointToLineDistance(a.Center1, b.Center1, b.Center2) <= dis)
+                if (Geometry.PointToLineDistance(a.Center1, b.Center1, b.Center2) <= dis)
                     return true;
             }
             if (math.dot(a.Center2 - b.Center2, b.Center1 - b.Center2) > 0 && math.dot(a.Center2 - b.Center1, b.Center1 - b.Center2) < 0)
             {
-                if (PointToLineDistance(a.Center2, b.Center1, b.Center2) <= dis)
+                if (Geometry.PointToLineDistance(a.Center2, b.Center1, b.Center2) <= dis)
                     return true;
             }
             if (math.dot(b.Center1 - a.Center2, a.Center1 - a.Center2) > 0 && math.dot(b.Center1 - a.Center1, a.Center1 - a.Center2) < 0)
             {
-                if (PointToLineDistance(b.Center1, a.Center1, a.Center2) <= dis)
+                if (Geometry.PointToLineDistance(b.Center1, a.Center1, a.Center2) <= dis)
                     return true;
             }
             if (math.dot(b.Center2 - a.Center2, a.Center1 - a.Center2) > 0 && math.dot(b.Center2 - a.Center1, a.Center1 - a.Center2) < 0)
             {
-                if (PointToLineDistance(b.Center2, a.Center1, a.Center2) <= dis)
+                if (Geometry.PointToLineDistance(b.Center2, a.Center1, a.Center2) <= dis)
                     return true;
             }
 
             return false;
-            //return SeparatingAxisTest(a, b);
         }
-        public static bool IsOverlapParallel(Capsule a, Capsule b)
+        internal static bool IsOverlapParallel(Capsule a, Capsule b)
         {
             //端点距离
             fix dis = (a.Radius + b.Radius) * (a.Radius + b.Radius);
@@ -79,29 +78,26 @@ namespace Mathematica
             dis = a.Radius + b.Radius;
             if (math.dot(a.Center1 - b.Center2, b.Center1 - b.Center2) > 0 && math.dot(a.Center1 - b.Center1, b.Center1 - b.Center2) < 0)
             {
-                if (PointToLineDistance(a.Center1, b.Center1, b.Center2) <= dis)
+                if (Geometry.PointToLineDistance(a.Center1, b.Center1, b.Center2) <= dis)
                     return true;
             }
             if (math.dot(a.Center2 - b.Center2, b.Center1 - b.Center2) > 0 && math.dot(a.Center2 - b.Center1, b.Center1 - b.Center2) < 0)
             {
-                if (PointToLineDistance(a.Center2, b.Center1, b.Center2) <= dis)
+                if (Geometry.PointToLineDistance(a.Center2, b.Center1, b.Center2) <= dis)
                     return true;
             }
             if (math.dot(b.Center1 - a.Center2, a.Center1 - a.Center2) > 0 && math.dot(b.Center1 - a.Center1, a.Center1 - a.Center2) < 0)
             {
-                if (PointToLineDistance(b.Center1, a.Center1, a.Center2) <= dis)
+                if (Geometry.PointToLineDistance(b.Center1, a.Center1, a.Center2) <= dis)
                     return true;
             }
             if (math.dot(b.Center2 - a.Center2, a.Center1 - a.Center2) > 0 && math.dot(b.Center2 - a.Center1, a.Center1 - a.Center2) < 0)
             {
-                if (PointToLineDistance(b.Center2, a.Center1, a.Center2) <= dis)
+                if (Geometry.PointToLineDistance(b.Center2, a.Center1, a.Center2) <= dis)
                     return true;
             }
 
             return false;
         }
-        public static bool IsOverlap(Capsule capsule, AABB aabb) { return SeparatingAxisTest(aabb, capsule); }
-        public static bool IsOverlap(Capsule capsule, OBB obb) { return SeparatingAxisTest(obb, capsule); }
-        public static bool IsOverlap(Capsule capsule, Sphere sphere) { return SeparatingAxisTest(capsule, sphere); }
     }
 }

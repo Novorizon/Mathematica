@@ -1,143 +1,219 @@
-﻿namespace Mathematica.Physics
+using Mathematica;
+
+namespace Mathematica
 {
     public static partial class Physics
     {
-
-        // 1000次装拆箱造成的额外耗时10ms,只在测试时使用
-        public static bool IsOverlap(Bounds a, Bounds b)
+        public enum Axis
         {
-            if (a is AABB a0)
+            XAxis,
+            YAxis,
+            ZAxis,
+            AnyAxis,//��������
+            Default = YAxis
+        };
+
+        public static bool IsOverlap(AABB a, fix3 point, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(fix3 point, AABB a, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(OBB a, fix3 point, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(fix3 point, OBB a, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(Sphere a, fix3 point, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(fix3 point, Sphere a, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(Capsule a, fix3 point, Axis axis = Axis.Default) => IsOverlap(a, point);
+        public static bool IsOverlap(fix3 point, Capsule a, Axis axis = Axis.Default) => IsOverlap(a, point);
+
+        public static bool IsOverlap(AABB a, AABB b, Axis axis = Axis.Default)
+        {
+            return axis switch
             {
-                if (b is AABB aabb)
-                {
-                    return Geometry.IsOverlap(a0, aabb);
-
-                }
-                else if (b is OBB obb)
-                {
-                    return Geometry.IsOverlap(a0, obb);
-
-                }
-                else if (b is Sphere sphere)
-                {
-                    return Geometry.IsOverlap(a0, sphere);
-
-                }
-                else if (b is Capsule capsule)
-                {
-                    return Geometry.IsOverlap(a0, capsule);
-
-                }
-            }
-            else if (a is OBB a1)
-            {
-                if (b is AABB aabb)
-                {
-                    return Geometry.IsOverlap(a1, aabb);
-
-                }
-                else if (b is OBB obb)
-                {
-                    return Geometry.IsOverlap(a1, obb);
-
-                }
-                else if (b is Sphere sphere)
-                {
-                    return Geometry.IsOverlap(a1, sphere);
-
-                }
-                else if (b is Capsule capsule)
-                {
-                    return Geometry.IsOverlap(a1, capsule);
-
-                }
-            }
-            else if (a is Sphere a2)
-            {
-                if (b is AABB aabb)
-                {
-                    return Geometry.IsOverlap(a2, aabb);
-
-                }
-                else if (b is OBB obb)
-                {
-                    return Geometry.IsOverlap(a2, obb);
-
-                }
-                else if (b is Sphere sphere)
-                {
-                    return Geometry.IsOverlap(a2, sphere);
-
-                }
-                else if (b is Capsule capsule)
-                {
-                    return Geometry.IsOverlap(a2, capsule);
-
-                }
-            }
-            else if (a is Capsule a3)
-            {
-                if (b is AABB aabb)
-                {
-                    return Geometry.IsOverlap(a3, aabb);
-
-                }
-                else if (b is OBB obb)
-                {
-                    return Geometry.IsOverlap(a3, obb);
-
-                }
-                else if (b is Sphere sphere)
-                {
-                    return Geometry.IsOverlap(a3, sphere);
-
-                }
-                else if (b is Capsule capsule)
-                {
-                    return Geometry.IsOverlap(a3, capsule);
-
-                }
-            }
-            return false;
+                Axis.XAxis => IsOverlap(a, b),
+                Axis.YAxis => IsOverlap(a, b),
+                Axis.ZAxis => IsOverlap(a, b),
+                Axis.AnyAxis => IsOverlap(a, b),
+                _ => IsOverlap(a, b)
+            };
         }
 
-        //public static bool IsOverlap<T1,T2>(T1 a, T2 b) where T1  : Bounds.Bounds where T2 : Bounds.Bounds
-        //{
-        //    return IsOverlap(a, b);
-        //    return false;
-        //}
-        public static bool Raycast(Ray ray, out RaycastHit hitInfo, fix maxDistance, int layerMask)
+        public static bool IsOverlap(AABB a, OBB b, Axis axis = Axis.Default)
         {
-            hitInfo = new RaycastHit();
-            fix dis = 0;
-            while (dis < maxDistance)
+            return axis switch
             {
-                //hitInfo.point = geometry.IsOverlap(new AABB(), ray.origin);
-                if (hitInfo.point != fix3.MinValue)
-                {
-                    return true;
-                }
-                dis += fix._0_1;
-                ray.origin += dis * ray.direction;
-            }
-            return false;
+                Axis.XAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTestY(a, b),
+                Axis.ZAxis => SeparatingAxisTest(a, b),
+                Axis.AnyAxis => SeparatingAxisTest(a, b),
+                _ => SeparatingAxisTest(a, b)
+            };
         }
 
-        public static bool Raycast(fix3 origin, fix3 direction, out RaycastHit hitInfo, fix maxDistance, int layerMask)
+        public static bool IsOverlap(AABB a, Sphere b, Axis axis = Axis.Default)
         {
-            hitInfo = new RaycastHit();
-            fix dis = 0;
-            while (dis < maxDistance)
+            return axis switch
             {
-                //hitInfo.point = geometry.IsOverlap(new Cuboid(), origin);
-                if (hitInfo.point != fix3.MinValue)
-                {
-                    return true;
-                }
-                dis += fix._0_1;
-                origin += dis * direction;
-            }
-            return false;
+                Axis.XAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTest(a, b),
+                Axis.ZAxis => SeparatingAxisTest(a, b),
+                Axis.AnyAxis => SeparatingAxisTest(a, b),
+                _ => SeparatingAxisTest(a, b)
+            };
+        }
+
+        public static bool IsOverlap(AABB a, Capsule b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTestY(a, b),
+                Axis.ZAxis => SeparatingAxisTest(a, b),
+                Axis.AnyAxis => SeparatingAxisTest(a, b),
+                _ => SeparatingAxisTest(a, b)
+            };
+        }
+
+
+        public static bool IsOverlap(OBB a, OBB b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTestY(a, b),
+                Axis.ZAxis => SeparatingAxisTest(a, b),
+                Axis.AnyAxis => SeparatingAxisTest(a, b),
+                _ => SeparatingAxisTest(a, b)
+            };
+        }
+
+        public static bool IsOverlap(OBB a, AABB b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTestY(b, a),
+                Axis.ZAxis => SeparatingAxisTest(b, a),
+                Axis.AnyAxis => SeparatingAxisTest(b, a),
+                _ => SeparatingAxisTest(b, a)
+            };
+        }
+
+        public static bool IsOverlap(OBB a, Sphere b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTest(a, b),
+                Axis.ZAxis => SeparatingAxisTest(a, b),
+                Axis.AnyAxis => SeparatingAxisTest(a, b),
+                _ => SeparatingAxisTest(a, b)
+            };
+        }
+
+        public static bool IsOverlap(OBB a, Capsule b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTestY(a, b),
+                Axis.ZAxis => SeparatingAxisTest(a, b),
+                Axis.AnyAxis => SeparatingAxisTest(a, b),
+                _ => SeparatingAxisTest(a, b)
+            };
+        }
+
+        public static bool IsOverlap(Sphere a, Sphere b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => IsOverlap(a, b),
+                Axis.YAxis => IsOverlap(a, b),
+                Axis.ZAxis => IsOverlap(a, b),
+                Axis.AnyAxis => IsOverlap(a, b),
+                _ => IsOverlap(a, b)
+            };
+        }
+
+
+        public static bool IsOverlap(Sphere a, AABB b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTest(b, a),
+                Axis.ZAxis => SeparatingAxisTest(b, a),
+                Axis.AnyAxis => SeparatingAxisTest(b, a),
+                _ => SeparatingAxisTest(b, a)
+            };
+        }
+
+        public static bool IsOverlap(Sphere a, OBB b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTest(b, a),
+                Axis.ZAxis => SeparatingAxisTest(b, a),
+                Axis.AnyAxis => SeparatingAxisTest(b, a),
+                _ => SeparatingAxisTest(b, b)
+            };
+        }
+
+        public static bool IsOverlap(Sphere a, Capsule b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTestY(b, a),
+                Axis.ZAxis => SeparatingAxisTest(b, a),
+                Axis.AnyAxis => SeparatingAxisTest(b, a),
+                _ => SeparatingAxisTest(b, a)
+            };
+        }
+
+        public static bool IsOverlap(Capsule a, Capsule b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => IsOverlapParallel(a, b),
+                Axis.YAxis => IsOverlapParallel(a, b),
+                Axis.ZAxis => IsOverlapParallel(a, b),
+                Axis.AnyAxis => IsOverlap(a, b),
+                _ => IsOverlap(a, b)
+            };
+        }
+
+        public static bool IsOverlap(Capsule a, AABB b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTestY(b, a),
+                Axis.ZAxis => SeparatingAxisTest(b, a),
+                Axis.AnyAxis => SeparatingAxisTest(b, a),
+                _ => SeparatingAxisTest(b, a)
+            };
+        }
+
+        public static bool IsOverlap(Capsule a, OBB b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(b, a),
+                Axis.YAxis => SeparatingAxisTest(b, a),
+                Axis.ZAxis => SeparatingAxisTest(b, a),
+                Axis.AnyAxis => SeparatingAxisTest(b, a),
+                _ => SeparatingAxisTest(b, a)
+            };
+        }
+
+        public static bool IsOverlap(Capsule a, Sphere b, Axis axis = Axis.Default)
+        {
+            return axis switch
+            {
+                Axis.XAxis => SeparatingAxisTest(a, b),
+                Axis.YAxis => SeparatingAxisTest(a, b),
+                Axis.ZAxis => SeparatingAxisTest(a, b),
+                Axis.AnyAxis => SeparatingAxisTest(a, b),
+                _ => SeparatingAxisTest(a, b)
+            };
         }
     }
 }
