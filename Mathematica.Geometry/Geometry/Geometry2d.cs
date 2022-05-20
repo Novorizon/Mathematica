@@ -7,40 +7,28 @@ namespace Mathematica
 {
     public static partial class Geometry
     {
-        //public static bool IsOverlap(Polygon poly1, Polygon poly2) { return SeparatingAxisTest(poly1, poly2); }
-        //public static bool IsOverlap(Triangle2D poly1, Triangle2D poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
-        //public static bool IsOverlap(Rectangle poly1, Rectangle poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
-        //public static bool IsOverlap(Hexagon poly1, Hexagon poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
+        public static bool IsConvex(Polygon polygon)
+        {
+            for (int i = 0; i < polygon.edges.Length; i++)
+            {
+                if (math.cross(polygon.edges[i], polygon.edges[(i + 1) % polygon.edges.Length]) * math.cross(polygon.edges[(i + 1) % polygon.edges.Length], polygon.edges[(i + 2) % polygon.edges.Length]) <= 0)
+                    return false;
+            }
+            return true;
+        }
 
-        //public static bool IsOverlap(Polygon poly1, Triangle2D poly2) { return SeparatingAxisTest(poly1, poly2.polygon); }
-        //public static bool IsOverlap(Triangle2D poly1, Polygon poly2) { return SeparatingAxisTest(poly1.polygon, poly2); }
-
-        //public static bool IsOverlap(Polygon poly1, Rectangle poly2) { return SeparatingAxisTest(poly1, poly2.polygon); }
-        //public static bool IsOverlap(Rectangle poly1, Polygon poly2) { return SeparatingAxisTest(poly1.polygon, poly2); }
-
-        //public static bool IsOverlap(Polygon poly1, Hexagon poly2) { return SeparatingAxisTest(poly1, poly2.polygon); }
-        //public static bool IsOverlap(Hexagon poly1, Polygon poly2) { return SeparatingAxisTest(poly1.polygon, poly2); }
-
-        //public static bool IsOverlap(Polygon poly, Circular circular) { return SeparatingAxisTest(poly, circular); }
-        //public static bool IsOverlap(Circular circular, Polygon poly) { return SeparatingAxisTest(poly, circular); }
-
-        //public static bool IsOverlap(Triangle2D poly1, Rectangle poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
-        //public static bool IsOverlap(Rectangle poly1, Triangle2D poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
-
-        //public static bool IsOverlap(Triangle2D poly1, Hexagon poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
-        //public static bool IsOverlap(Hexagon poly1, Triangle2D poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
-
-        //public static bool IsOverlap(Triangle2D poly, Circular circular) { return SeparatingAxisTest(poly.polygon, circular); }
-        //public static bool IsOverlap(Circular circular, Triangle2D poly) { return SeparatingAxisTest(poly.polygon, circular); }
-
-        //public static bool IsOverlap(Rectangle poly1, Hexagon poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
-        //public static bool IsOverlap(Hexagon poly1, Rectangle poly2) { return SeparatingAxisTest(poly1.polygon, poly2.polygon); }
-
-        //public static bool IsOverlap(Rectangle poly, Circular circular) { return SeparatingAxisTest(poly.polygon, circular); }
-        //public static bool IsOverlap(Circular circular, Rectangle poly) { return SeparatingAxisTest(poly.polygon, circular); }
-
-        //public static bool IsOverlap(Hexagon poly, Circular circular) { return SeparatingAxisTest(poly.polygon, circular); }
-        //public static bool IsOverlap(Circular circular, Hexagon poly) { return SeparatingAxisTest(poly.polygon, circular); }
+        public static bool IsConvex(fix2[] points)
+        {
+            for (int i = 0; i < points.Length; i++)
+            {
+                fix2 line0 = points[(i + 1) % points.Length] - points[i];
+                fix2 line1 = points[(i + 2) % points.Length] - points[(i + 1) % points.Length];
+                fix2 line2 = points[(i + 3) % points.Length] - points[(i + 2) % points.Length];
+                if (math.cross(line0, line1) * math.cross(line1, line2) <= 0)
+                    return false;
+            }
+            return true;
+        }
 
 
         public static bool IsOverlap(Circular c1, Circular c2)
