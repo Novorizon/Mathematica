@@ -214,6 +214,26 @@ namespace Mathematica
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fix sqrt(fix a)
         {
+            if (a.value < 0)
+                return fix.NaN;
+
+            if (a.value == 0)
+                return fix.zero;
+
+            fix x = a;
+            long b = (x.value >> 2) + 1L;
+            x.value = (b + (a.value << fix.PRECISION) / x.value) >> 1;
+            while (x.value < b)
+            {
+                b = x.value;
+                x.value = (x.value + (a.value << fix.PRECISION) / x.value) >> 1;
+            }
+            return x;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static fix sqrt(fix a)
+        {
             if (a.value < 0) return fix.NaN;
             if (a.value == 0) return fix.Zero;
 
