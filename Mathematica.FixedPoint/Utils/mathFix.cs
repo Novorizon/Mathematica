@@ -218,7 +218,7 @@ namespace Mathematica
                 return fix.NaN;
 
             if (a.value == 0)
-                return fix.zero;
+                return fix.Zero;
 
             fix x = a;
             long b = (x.value >> 2) + 1L;
