@@ -1,6 +1,4 @@
-﻿using Mathematica.Physics;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 namespace Mathematica
 {
@@ -112,7 +110,7 @@ namespace Mathematica
             count++;
             id = 0;
             //检测包围和碰撞，返回碰撞的子树的信息
-            if (Geometry.IsOverlap( aabb, a))
+            if (Physics.IsOverlap( aabb, a))
             {
                 if (isLeaf)
                 {

@@ -17,19 +17,6 @@ namespace Mathematica
             return true;
         }
 
-        public static bool IsConvex(fix2[] points)
-        {
-            for (int i = 0; i < points.Length; i++)
-            {
-                fix2 line0 = points[(i + 1) % points.Length] - points[i];
-                fix2 line1 = points[(i + 2) % points.Length] - points[(i + 1) % points.Length];
-                fix2 line2 = points[(i + 3) % points.Length] - points[(i + 2) % points.Length];
-                if (math.cross(line0, line1) * math.cross(line1, line2) <= 0)
-                    return false;
-            }
-            return true;
-        }
-
 
         public static bool IsOverlap(Circular c1, Circular c2)
         {
