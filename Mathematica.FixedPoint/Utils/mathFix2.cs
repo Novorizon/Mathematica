@@ -35,6 +35,9 @@ namespace Mathematica
         public static fix dot(fix2 x, fix2 y) { return x.x * y.x + x.y * y.y; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static fix cross(fix2 x, fix2 y) { return x.x * y.y - x.y * y.x; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fix length(fix2 x) { return sqrt(dot(x, x)); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
