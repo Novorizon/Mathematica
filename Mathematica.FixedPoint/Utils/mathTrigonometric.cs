@@ -83,7 +83,7 @@ namespace Mathematica
 
         /// Cos [-1, 1]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fix acos(fix x) { x.value += fix.One.value; x *= fix._0_5; x.value = trigonometric.acos(x.value); return x; }
+        public static fix acos(fix x) { x.value += fix.ONE; x *= fix._0_5; x.value = trigonometric.acos(x.value); return x; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fix2 acos(fix2 x) { return new fix2(acos(x.x), acos(x.y)); }

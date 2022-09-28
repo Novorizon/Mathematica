@@ -37,7 +37,9 @@ namespace Mathematica
         public static readonly fix _100 = 100;
         public static readonly fix _1000 = 1000;
         public static readonly fix _10000 = 10000;
+        public static readonly fix _100000 = 100000;
 
+        public static readonly fix _0_00001 = _1 / _100000;
         public static readonly fix _0_0001 = _1 / _10000;
         public static readonly fix _0_0005 = _0_0001 * 5;
         public static readonly fix _0_9995 = _1 - _0_0005;

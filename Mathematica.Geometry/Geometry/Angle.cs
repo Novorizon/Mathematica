@@ -6,21 +6,26 @@ namespace Mathematica
     {
 
         /// Determine the signed angle between two vectors, with normal 'n' as the rotation axis.
-        /// 两个向量之间的夹角，有符号.
-        public static fix AngleSigned(fix3 v1, fix3 v2, fix3 n)
+        /// 两个向量之间的夹角，有符号. 顺时针为正 [0,180] 逆时针为正(0,180)
+        public static fix AngleSigned(fix3 from, fix3 to, fix3 n)
         {
-            return math.atan2(math.dot(n, math.cross(v1, v2)), math.dot(v1, v2)) * math.Rad2Deg;
+            return math.atan2(math.dot(n, math.cross(from, to)), math.dot(from, to)) * math.Rad2Deg;
         }
 
         /// Determine the signed angle between two vectors
-        /// 两个向量之间的夹角，无符号
-        public static fix Angle(fix3 v1, fix3 v2)
+        /// 两个向量之间的夹角，无符号 [0,180]
+        public static fix kEpsilon = fix._0_00001;
+        public static fix kEpsilonNormalSqrt = 1e-15F;
+        public static fix Angle(fix3 from, fix3 to)
         {
-            fix dot = math.dot(v1, v2);
-            if (dot == 0)
-                return 0;
+            fix denominator = math.sqrt(math.lengthsq(from) * math.lengthsq(to));
+            if (denominator < kEpsilonNormalSqrt)
+                return 0F;
 
-            dot = math.clamp(math.dot(v1, v2) / dot, -fix._1, fix._1);
+            float dot = math.clamp(math.dot(from, to) / denominator, -fix._1, fix._1);
+            //fix dot = math.dot(v1, v2);
+            //if (dot == 0)
+            //    return 0;
             return math.acos(dot) * math.Rad2Deg;
         }
 

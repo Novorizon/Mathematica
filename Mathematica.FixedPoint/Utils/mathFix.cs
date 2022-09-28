@@ -214,27 +214,47 @@ namespace Mathematica
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fix sqrt(fix a)
         {
-            if (a.value < 0) return fix.NaN;
-            if (a.value == 0) return fix.Zero;
+            if (a.value < 0)
+                return fix.NaN;
+
+            if (a.value == 0)
+                return fix.Zero;
 
             fix x = a;
-            for (int i = 0; i < 20; i++) { x.value = (x.value + (a.value << fix.PRECISION) / x.value) >> 1; }
+            long b = (x.value >> 2) + 1L;
+            x.value = (b + (a.value << fix.PRECISION) / x.value) >> 1;
+            while (x.value < b)
+            {
+                b = x.value;
+                x.value = (x.value + (a.value << fix.PRECISION) / x.value) >> 1;
+            }
             return x;
-
-            //关系模式在 C# 8.0 中不可用
-            //switch (a.value)
-            //{
-            //    case < 0:
-            //        return fix.NaN;
-            //    case > 0:
-            //        fix x = a;
-            //        for (int i = 0; i < 20; i++) { x.value = (x.value + (a.value << fix.PRECISION) / x.value) >> 1; }
-            //        return x;
-            //    default:
-            //        return fix.Zero;
-
-            //}
         }
+
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //public static fix sqrt(fix a)
+        //{
+        //    if (a.value < 0) return fix.NaN;
+        //    if (a.value == 0) return fix.Zero;
+
+        //    fix x = a;
+        //    for (int i = 0; i < 20; i++) { x.value = (x.value + (a.value << fix.PRECISION) / x.value) >> 1; }
+        //    return x;
+
+        //    //关系模式在 C# 8.0 中不可用
+        //    //switch (a.value)
+        //    //{
+        //    //    case < 0:
+        //    //        return fix.NaN;
+        //    //    case > 0:
+        //    //        fix x = a;
+        //    //        for (int i = 0; i < 20; i++) { x.value = (x.value + (a.value << fix.PRECISION) / x.value) >> 1; }
+        //    //        return x;
+        //    //    default:
+        //    //        return fix.Zero;
+
+        //    //}
+        //}
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
