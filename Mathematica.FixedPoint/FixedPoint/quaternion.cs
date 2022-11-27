@@ -43,7 +43,7 @@ namespace Mathematica
                 value.y = (m02 - m20) / S;
                 value.z = (m10 - m01) / S;
             }
-            else if ((m00 > m11) & (m00 > m22))
+            else if ((m00 > m11) && (m00 > m22))
             {
                 fix S = sqrt(fix._1 + m00 - m11 - m22) * 2; // S=4*qx 
                 value.w = (m21 - m12) / S;
@@ -96,7 +96,7 @@ namespace Mathematica
                 value.y = (m02 - m20) * Srcp;
                 value.z = (m10 - m01) * Srcp;
             }
-            else if ((m00 > m11) & (m00 > m22))
+            else if ((m00 > m11) && (m00 > m22))
             {
                 fix S = sqrt(fix._1 + m00 - m11 - m22) * 2; // S=4*qx 
                 fix Srcp = 1 / S;
