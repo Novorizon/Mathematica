@@ -132,7 +132,7 @@ namespace Mathematica
         //}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fix mod(fix x, fix y) { x.value = x.value == fix.Min & y.value == -1 ? 0 : x.value % y.value; return x; }
+        public static fix mod(fix x, fix y) { x.value = x.value == fix.Min && y.value == -1 ? 0 : x.value % y.value; return x; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static fix pow(fix x, int n)
