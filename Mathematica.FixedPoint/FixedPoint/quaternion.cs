@@ -128,17 +128,18 @@ namespace Mathematica
         }
 
 
-
+        ///角度
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static quaternion AxisAngle(fix3 axis, fix angle)
+        public static quaternion AngleAxis(fix3 axis, fix angle)
         {
             fix sina, cosa;
             sincos(fix._0_5 * angle * math.Deg2Rad, out sina, out cosa);
             return new quaternion(new fix4(axis * sina, cosa));
         }
 
+        ///弧度
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static quaternion AxisRadian(fix3 axis, fix radian)
+        public static quaternion AxisAngle(fix3 axis, fix angle)
         {
             fix sina, cosa;
             sincos(fix._0_5 * radian, out sina, out cosa);
@@ -265,7 +266,7 @@ namespace Mathematica
             return new quaternion(0.0f, 0.0f, sina, cosa);
         }
 
-        /// ����
+        /// ¹²éî
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion conjugate(quaternion q) { return new quaternion(q.value * new fix4(-fix._1, -fix._1, -fix._1, fix._1)); }
 
