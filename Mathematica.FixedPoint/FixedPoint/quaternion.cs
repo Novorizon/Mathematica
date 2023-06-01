@@ -129,13 +129,13 @@ namespace Mathematica
 
 
         ///角度
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static quaternion AngleAxis(fix3 axis, fix angle)
-        {
-            fix sina, cosa;
-            sincos(fix._0_5 * angle * math.Deg2Rad, out sina, out cosa);
-            return new quaternion(new fix4(axis * sina, cosa));
-        }
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //public static quaternion AngleAxis(fix3 axis, fix angle)
+        //{
+        //    fix sina, cosa;
+        //    sincos(fix._0_5 * angle * math.Deg2Rad, out sina, out cosa);
+        //    return new quaternion(new fix4(axis * sina, cosa));
+        //}
 
         ///弧度
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -146,11 +146,10 @@ namespace Mathematica
             return new quaternion(new fix4(axis * sina, cosa));
         }
 
+        ///参数为单位向量
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion LookRotation(fix3 forward, fix3 up)
         {
-            forward = math.normalize(forward);
-            up = math.normalize(up);
             fix3 t = math.normalize(cross(up, forward));
             return new quaternion(new fix3x3(t, cross(forward, t), forward));
         }
