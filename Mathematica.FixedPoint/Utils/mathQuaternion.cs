@@ -108,6 +108,12 @@ namespace Mathematica
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static fix angle(quaternion q1, quaternion q2)
+        {
+            fix diff = asin(length(normalize(mul(conjugate(q1), q2)).value.xyz));
+            return diff + diff;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fix3 forward(quaternion q) { return mul(q, new fix3(0, 0, 1)); }
