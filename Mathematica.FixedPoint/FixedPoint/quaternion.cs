@@ -128,21 +128,18 @@ namespace Mathematica
         }
 
 
-        ///角度
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static quaternion AngleAxis(fix3 axis, fix angle)
-        //{
-        //    fix sina, cosa;
-        //    sincos(fix._0_5 * angle * math.Deg2Rad, out sina, out cosa);
-        //    return new quaternion(new fix4(axis * sina, cosa));
-        //}
 
-        ///弧度
+        /// <summary>
+        /// AxisAngle
+        /// </summary>
+        /// <param name="axis"></param>
+        /// <param name="angle">弧度</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion AxisAngle(fix3 axis, fix angle)
         {
             fix sina, cosa;
-            sincos(fix._0_5 * radian, out sina, out cosa);
+            sincos(fix._0_5 * angle, out sina, out cosa);
             return new quaternion(new fix4(axis * sina, cosa));
         }
 
